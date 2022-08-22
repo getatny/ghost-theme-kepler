@@ -1,0 +1,11 @@
+@import "../../styles//variables.scss";
+
+.mainWrapper {
+  padding-top: 112px;
+  display: flex;
+  justify-content: center;
+}
+
+.content {
+  width: $website-width;
+}

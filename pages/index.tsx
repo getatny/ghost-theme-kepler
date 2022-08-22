@@ -1,10 +1,11 @@
+import "antd/lib/grid/style/index.css";
+
+import { Col, Row } from "antd";
 import type { Pagination, PostsOrPages } from "@tryghost/content-api";
 
 import GhostApi from "../utils/ghost-api";
-import Head from "next/head";
-import Image from "next/image";
 import type { NextPage } from "next";
-import styles from "../styles/Home.module.css";
+import styles from "../styles/index-page.module.scss";
 
 const Home: NextPage<{
   normalPosts: PostsOrPages;
@@ -13,7 +14,28 @@ const Home: NextPage<{
 }> = (props) => {
   const { normalPosts, featuredPosts, pagination } = props;
 
-  return <>{normalPosts.map((post) => post.title)}</>;
+  return (
+    <>
+      <div className={styles.areaTitle}>Posts</div>
+
+      <Row style={{ marginTop: 32 }}>
+        {normalPosts.map((post) => (
+          <Col span={8} key={post.slug}>
+            {post.feature_image && (
+              <picture>
+                <source srcSet={post.feature_image} />
+                <img
+                  src={post.feature_image}
+                  alt={post.title + " - 封面"}
+                  className={styles.featureImg}
+                />
+              </picture>
+            )}
+          </Col>
+        ))}
+      </Row>
+    </>
+  );
 };
 
 export const getStaticProps = async () => {
@@ -36,7 +58,7 @@ export const getStaticProps = async () => {
   }
 
   return {
-    props: { normalPosts, featuredPosts, pagination },
+    props: { normalPosts, featuredPosts, pagination, key: "index" },
   };
 };
 

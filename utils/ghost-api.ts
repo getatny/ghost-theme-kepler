@@ -10,4 +10,15 @@ export const getSettings = async () => {
   return await GhostApi.settings.browse();
 };
 
+export const getPostContent = async (slug: string) => {
+  return await GhostApi.posts.read(
+    {
+      slug,
+    },
+    {
+      include: ["tags"],
+    }
+  );
+};
+
 export default GhostApi;

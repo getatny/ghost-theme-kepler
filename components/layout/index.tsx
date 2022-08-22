@@ -5,6 +5,7 @@ import HeadComponent from "@/components/head";
 import type { Settings } from "@tryghost/content-api";
 import { blogSettingsContext } from "@/utils/context";
 import { getSettings } from "@/utils/ghost-api";
+import styles from "./layout.module.scss";
 
 const LayoutComponent: FC<PropsWithChildren> = memo(({ children }) => {
   const [pageLoading, setPageLoading] = useState<boolean>(true);
@@ -25,7 +26,9 @@ const LayoutComponent: FC<PropsWithChildren> = memo(({ children }) => {
 
       <HeadComponent />
 
-      {children}
+      <div className={styles.mainWrapper}>
+        <div className={styles.content}>{children}</div>
+      </div>
     </blogSettingsContext.Provider>
   );
 });
