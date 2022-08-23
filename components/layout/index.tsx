@@ -1,5 +1,6 @@
 import { FC, PropsWithChildren, memo, useEffect, useState } from "react";
 
+import FooterComponent from "../footer";
 import Head from "next/head";
 import HeadComponent from "@/components/head";
 import type { Settings } from "@tryghost/content-api";
@@ -29,6 +30,8 @@ const LayoutComponent: FC<PropsWithChildren> = memo(({ children }) => {
       <div className={styles.mainWrapper}>
         <div className={styles.content}>{children}</div>
       </div>
+
+      <FooterComponent />
     </blogSettingsContext.Provider>
   );
 });

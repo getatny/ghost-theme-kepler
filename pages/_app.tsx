@@ -1,3 +1,5 @@
+import "@/styles/globals.css";
+
 import { AnimatePresence, motion } from "framer-motion";
 
 import type { AppProps } from "next/app";
@@ -5,8 +7,8 @@ import LayoutComponent from "../components/layout";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <LayoutComponent>
-      <AnimatePresence>
+    <AnimatePresence>
+      <LayoutComponent>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -15,8 +17,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         >
           <Component {...pageProps} />
         </motion.div>
-      </AnimatePresence>
-    </LayoutComponent>
+      </LayoutComponent>
+    </AnimatePresence>
   );
 }
 
