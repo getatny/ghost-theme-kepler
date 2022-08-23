@@ -15,3 +15,7 @@ export const getRandomGradientColor = () => {
 export const formatDate = (date: string) => {
   return dayjs(date).format("YYYY / MM / DD");
 };
+
+export const urlFormat = (url: string) => {
+  return url.replaceAll("//", "/");
+};

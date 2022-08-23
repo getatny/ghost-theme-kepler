@@ -8,32 +8,38 @@ import { blogSettingsContext } from "@/utils/context";
 import { getSettings } from "@/utils/ghost-api";
 import styles from "./layout.module.scss";
 
-const LayoutComponent: FC<PropsWithChildren> = memo(({ children }) => {
-  const [pageLoading, setPageLoading] = useState<boolean>(true);
-  const [blogSettings, setBlogSettings] = useState<Settings>({});
+interface LayoutComponentProps {
+  pageKey: string;
+}
 
-  useEffect(() => {
-    (async () => {
-      const blogSettings = await getSettings();
-      setBlogSettings(blogSettings);
-    })();
-  }, []);
+const LayoutComponent: FC<PropsWithChildren<LayoutComponentProps>> = memo(
+  ({ children }) => {
+    const [pageLoading, setPageLoading] = useState<boolean>(true);
+    const [blogSettings, setBlogSettings] = useState<Settings>({});
 
-  return (
-    <blogSettingsContext.Provider value={blogSettings}>
-      <Head>
-        <title key="blog-title">{blogSettings?.title || "加载中..."}</title>
-      </Head>
+    useEffect(() => {
+      (async () => {
+        const blogSettings = await getSettings();
+        setBlogSettings(blogSettings);
+      })();
+    }, []);
 
-      <HeadComponent />
+    return (
+      <blogSettingsContext.Provider value={blogSettings}>
+        <Head>
+          <title key="blog-title">{blogSettings?.title || "加载中..."}</title>
+        </Head>
 
-      <div className={styles.mainWrapper}>
-        <div className={styles.content}>{children}</div>
-      </div>
+        <HeadComponent />
 
-      <FooterComponent />
-    </blogSettingsContext.Provider>
-  );
-});
+        <div className={styles.mainWrapper}>
+          <div className={styles.content}>{children}</div>
+        </div>
+
+        <FooterComponent />
+      </blogSettingsContext.Provider>
+    );
+  }
+);
 
 export default LayoutComponent;

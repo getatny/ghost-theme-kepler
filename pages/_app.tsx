@@ -8,15 +8,8 @@ import LayoutComponent from "../components/layout";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AnimatePresence>
-      <LayoutComponent>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          key={pageProps.key}
-        >
-          <Component {...pageProps} />
-        </motion.div>
+      <LayoutComponent pageKey={pageProps.key}>
+        <Component {...pageProps} />
       </LayoutComponent>
     </AnimatePresence>
   );

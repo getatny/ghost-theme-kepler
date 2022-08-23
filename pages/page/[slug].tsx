@@ -1,35 +1,32 @@
 import GhostApi, { getPageContent, getPostContent } from "@/utils/ghost-api";
 
+import { NextPage } from "next";
+import { PostOrPage } from "@tryghost/content-api";
 import { memo } from "react";
 
-const Post = memo(() => {
+interface PostOrPageProps {
+  content: PostOrPage;
+}
+
+const Page: NextPage<PostOrPageProps> = memo(({ content }) => {
   return null;
 });
 
 export const getStaticPaths = async () => {
-  const posts = await GhostApi.posts.browse({
-    limit: "all",
-  });
   const pages = await GhostApi.pages.browse({
     limit: "all",
   });
 
-  // Get the paths we want to create based on posts
-  const postPaths = posts.map((post) => ({
-    params: { slug: post.slug, type: "posts" },
-  }));
-
   const pagePaths = pages.map((page) => ({
-    params: { slug: page.slug, type: "page" },
+    params: { slug: page.slug },
   }));
 
   // { fallback: false } means posts not found should 404.
-  return { paths: [...postPaths, ...pagePaths], fallback: false };
+  return { paths: pagePaths, fallback: false };
 };
 
 export const getStaticProps = async (context: any) => {
-  const func = context.params.type === "post" ? getPostContent : getPageContent;
-  const content = await func(context.params.slug);
+  const content = await getPageContent(context.params.slug);
 
   if (!content) {
     return {
@@ -42,4 +39,4 @@ export const getStaticProps = async (context: any) => {
   };
 };
 
-export default Post;
+export default Page;

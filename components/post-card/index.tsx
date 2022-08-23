@@ -1,7 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
 import { FC, memo, useMemo } from "react";
-import { formatDate, getRandomGradientColor } from "@/utils/commons";
+import { formatDate, getRandomGradientColor, urlFormat } from "@/utils/commons";
 
 import { PostOrPage } from "@tryghost/content-api";
+import { motion } from "framer-motion";
 import styles from "./index.module.scss";
 import { useRouter } from "next/router";
 
@@ -17,34 +19,43 @@ const PostCard: FC<PostCardProps> = memo(({ postInfo }) => {
   }, []);
 
   return (
-    <div
+    <motion.div
       className={styles.postItem}
-      onClick={() => router.push(postInfo.slug)}
+      onClick={() => router.push(urlFormat(`/post/${postInfo.slug}`))}
+      layout
     >
       {postInfo.feature_image ? (
-        <picture>
-          <source srcSet={postInfo.feature_image} />
-          <img
-            src={postInfo.feature_image}
-            alt={postInfo.title + " - 封面"}
-            className={styles.featureImgBlock}
-          />
-        </picture>
+        <motion.img
+          src={postInfo.feature_image}
+          alt={postInfo.title + " - 封面"}
+          className={styles.featureImgBlock}
+          key={`feature-img-${postInfo.slug}`}
+          layoutId={`feature-img-${postInfo.slug}`}
+        />
       ) : (
-        <div className={styles.featureImgBlock} style={{ background: bgColor }}>
+        <motion.div
+          className={styles.featureImgBlock}
+          style={{ background: bgColor }}
+        >
           <div className={styles.noFeatureImgBlockText}>
             {[...postInfo.title?.slice(0, 4)!].map((word, index) => (
               <span key={`${word}${index}`}>{word}</span>
             ))}
           </div>
-        </div>
+        </motion.div>
       )}
 
-      <div className={styles.postTitle}>{postInfo.title}</div>
-      <div className={styles.time}>
+      <motion.div
+        className={styles.postTitle}
+        layoutId={`content-title-${postInfo.slug}`}
+        key={`content-title-${postInfo.slug}`}
+      >
+        {postInfo.title}
+      </motion.div>
+      <motion.div className={styles.time}>
         {formatDate(postInfo.published_at || "")}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 });
 

@@ -6,6 +6,7 @@ import { blogSettingsContext } from "@/utils/context";
 import classNames from "classnames";
 import { fadeInOutVariants } from "@/utils/motion-animate";
 import styles from "./index.module.scss";
+import { urlFormat } from "@/utils/commons";
 import { useRouter } from "next/router";
 
 const HeadComponent: FC = memo(() => {
@@ -23,10 +24,10 @@ const HeadComponent: FC = memo(() => {
   );
 
   return (
-    <header className={styles.header}>
+    <motion.header className={styles.header} key="header">
       <div className={styles.content}>
         {blogSettings.logo ? (
-          <picture>
+          <picture onClick={() => router.push("/")}>
             <source srcSet={blogSettings.logo} type="image/png" />
             <img src={blogSettings.logo} alt="Logo" className={styles.logo} />
           </picture>
@@ -43,7 +44,7 @@ const HeadComponent: FC = memo(() => {
                 key={nav.url}
                 layout
               >
-                <Link href={nav.url}>{nav.label}</Link>
+                <Link href={urlFormat(`/page/${nav.url}`)}>{nav.label}</Link>
 
                 <AnimatePresence>
                   {checkIfRouterActive(nav.url) && (
@@ -63,7 +64,7 @@ const HeadComponent: FC = memo(() => {
           </AnimateSharedLayout>
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 });
 

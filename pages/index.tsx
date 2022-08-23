@@ -1,5 +1,6 @@
 import "antd/lib/grid/style/index.css";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { Col, Row } from "antd";
 import GhostApi, { getTags } from "../utils/ghost-api";
 import type { Pagination, PostsOrPages, Tags } from "@tryghost/content-api";
@@ -10,8 +11,7 @@ import type { NextPage } from "next";
 import PostCard from "@/components/post-card";
 import { bouceInOutVariants } from "@/utils/motion-animate";
 import classNames from "classnames";
-import { motion } from "framer-motion";
-import styles from "../styles/index-page.module.scss";
+import styles from "../styles/index.module.scss";
 
 const Home: NextPage<{
   normalPosts: PostsOrPages;
@@ -67,11 +67,12 @@ const Home: NextPage<{
       </div>
 
       <Row style={{ marginTop: 32 }} gutter={[24, 24]}>
-        {filteredPosts.map((post) => (
-          <Col span={8} key={post.slug}>
+        <AnimatePresence>
+          {filteredPosts.map((post) => (
             <motion.div
-              layoutId={`post-card-${post.slug}`}
-              key={`post-card-${post.slug}`}
+              className="ant-col ant-col-8"
+              style={{ paddingLeft: 12, paddingRight: 12 }}
+              key={post.slug}
               variants={bouceInOutVariants}
               initial="bounceOut"
               animate="bounceIn"
@@ -79,8 +80,8 @@ const Home: NextPage<{
             >
               <PostCard postInfo={post} />
             </motion.div>
-          </Col>
-        ))}
+          ))}
+        </AnimatePresence>
       </Row>
     </>
   );
