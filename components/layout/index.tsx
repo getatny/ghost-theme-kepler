@@ -3,6 +3,7 @@ import { FC, PropsWithChildren, memo, useEffect, useState } from "react";
 import FooterComponent from "../footer";
 import Head from "next/head";
 import HeadComponent from "@/components/head";
+import Script from "next/script";
 import type { Settings } from "@tryghost/content-api";
 import { blogSettingsContext } from "@/utils/context";
 import { getSettings } from "@/utils/ghost-api";

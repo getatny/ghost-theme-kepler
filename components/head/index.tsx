@@ -1,4 +1,4 @@
-import { AnimatePresence, AnimateSharedLayout, motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { FC, memo, useCallback, useContext } from "react";
 
 import Link from "next/link";
@@ -16,9 +16,8 @@ const HeadComponent: FC = memo(() => {
 
   const checkIfRouterActive = useCallback(
     (targetRouter: string) => {
-      return (
-        router.asPath === targetRouter || router.asPath + "/" === targetRouter
-      );
+      const reg = new RegExp(`^/?(post|page)?${targetRouter}?$`);
+      return reg.test(router.asPath);
     },
     [router]
   );
@@ -34,34 +33,32 @@ const HeadComponent: FC = memo(() => {
         ) : null}
 
         <div className={styles.navigation}>
-          <AnimateSharedLayout>
-            {blogSettings.navigation?.map((nav) => (
-              <motion.div
-                className={classNames(
-                  styles.navigationItem,
-                  checkIfRouterActive(nav.url) && styles.routerActive
-                )}
-                key={nav.url}
-                layout
-              >
-                <Link href={urlFormat(`/page/${nav.url}`)}>{nav.label}</Link>
+          {blogSettings.navigation?.map((nav) => (
+            <motion.div
+              className={classNames(
+                styles.navigationItem,
+                checkIfRouterActive(nav.url) && styles.routerActive
+              )}
+              key={nav.url}
+              layout
+            >
+              <Link href={urlFormat("page", nav.url)}>{nav.label}</Link>
 
-                <AnimatePresence>
-                  {checkIfRouterActive(nav.url) && (
-                    <motion.div
-                      className={styles.routerActiveDot}
-                      variants={fadeInOutVariants}
-                      initial="fadeOut"
-                      animate="fadeIn"
-                      exit="fadeOut"
-                      key="router-active-dot"
-                      layoutId="router-active-dot"
-                    />
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            ))}
-          </AnimateSharedLayout>
+              <AnimatePresence>
+                {checkIfRouterActive(nav.url) && (
+                  <motion.div
+                    className={styles.routerActiveDot}
+                    variants={fadeInOutVariants}
+                    initial="fadeOut"
+                    animate="fadeIn"
+                    exit="fadeOut"
+                    key="router-active-dot"
+                    layoutId="router-active-dot"
+                  />
+                )}
+              </AnimatePresence>
+            </motion.div>
+          ))}
         </div>
       </div>
     </motion.header>

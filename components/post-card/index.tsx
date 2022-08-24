@@ -21,7 +21,7 @@ const PostCard: FC<PostCardProps> = memo(({ postInfo }) => {
   return (
     <motion.div
       className={styles.postItem}
-      onClick={() => router.push(urlFormat(`/post/${postInfo.slug}`))}
+      onClick={() => router.push(urlFormat("post", postInfo.slug))}
       layout
     >
       {postInfo.feature_image ? (
@@ -52,9 +52,7 @@ const PostCard: FC<PostCardProps> = memo(({ postInfo }) => {
       >
         {postInfo.title}
       </motion.div>
-      <motion.div className={styles.time}>
-        {formatDate(postInfo.published_at || "")}
-      </motion.div>
+      <div className={styles.time}>{formatDate(postInfo.published_at!)}</div>
     </motion.div>
   );
 });

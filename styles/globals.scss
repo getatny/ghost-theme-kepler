@@ -1,0 +1,161 @@
+@import "./variables.scss";
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "PingFang SC", "Lantinghei SC", "Microsoft Yahei",
+    "Hiragino Sans GB", "Microsoft Sans Serif", "WenQuanYi Micro Hei",
+    "sans-serif";
+  letter-spacing: 1.6px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+fieldset,
+ol,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+blockquote,
+dd,
+dl,
+figure,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+pre {
+  margin: 0;
+}
+
+/* @media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: white;
+    background: black;
+  }
+} */
+
+.post-toc {
+  width: 13.75rem;
+  max-height: 25rem;
+  position: fixed;
+  top: 14rem;
+  right: 2.5rem;
+  overflow: hidden;
+  font-size: 12px;
+  letter-spacing: 0;
+
+  &:hover {
+    overflow: auto;
+
+    .toc-list-item {
+      a {
+        opacity: 1;
+      }
+    }
+  }
+
+  .toc-list {
+    &.is-collapsible {
+      margin-top: 0.5rem;
+      margin-left: -2rem;
+
+      .toc-list-item {
+        &::before {
+          content: "";
+          width: 0.45rem;
+          height: 0.45rem;
+        }
+      }
+    }
+  }
+
+  & .toc-list-item {
+    padding-left: 2rem;
+    width: 100%;
+    position: relative;
+    margin-bottom: 0.5rem;
+
+    .node-name--H2 {
+      font-weight: 800;
+    }
+
+    &::before {
+      content: "";
+      width: 0.45rem;
+      height: 0.45rem;
+      background-color: transparent;
+      border-width: 2px;
+      border-style: solid;
+      border-radius: 50%;
+      position: absolute;
+      top: 3.5px;
+      transform: translateX(-50%);
+      left: 1rem;
+      transition: border-color 0.35s ease;
+      border-color: rgba(134, 138, 147, 0.2);
+    }
+
+    &:hover {
+      &::before {
+        content: "";
+        border-color: #868a93;
+      }
+
+      a {
+        color: $text-color;
+      }
+    }
+
+    &.is-active-li {
+      &::before {
+        content: "";
+        border-color: #868a93;
+      }
+
+      & > a {
+        opacity: 1;
+        color: $text-color;
+      }
+    }
+
+    a {
+      opacity: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%;
+      transition: all 0.35s ease;
+      display: inline-block;
+      color: #868a93;
+    }
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  .post-toc {
+    display: none;
+  }
+}

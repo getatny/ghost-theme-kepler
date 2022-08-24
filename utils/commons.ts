@@ -16,6 +16,11 @@ export const formatDate = (date: string) => {
   return dayjs(date).format("YYYY / MM / DD");
 };
 
-export const urlFormat = (url: string) => {
-  return url.replaceAll("//", "/");
+export const urlFormat = (prefix: string, url: string) => {
+  if (url === "/") {
+    return "/";
+  } else {
+    const finalUrl = `/${prefix}/${url}`;
+    return finalUrl.replaceAll(/\/+/g, "/");
+  }
 };

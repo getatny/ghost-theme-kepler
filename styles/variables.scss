@@ -5,3 +5,7 @@ $main-color: rgba(109, 147, 100, 1);
 $secondary-color: #bababa;
 
 $website-width: 940px;
+
+@mixin font-code {
+  font-family: "Source Code Pro", "monospace";
+}
