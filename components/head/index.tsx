@@ -5,7 +5,6 @@ import Link from "next/link";
 import { blogSettingsContext } from "@/utils/context";
 import classNames from "classnames";
 import { fadeInOutVariants } from "@/utils/motion-animate";
-import styles from "./index.module.scss";
 import { urlFormat } from "@/utils/commons";
 import { useRouter } from "next/router";
 
@@ -23,31 +22,40 @@ const HeadComponent: FC = memo(() => {
   );
 
   return (
-    <motion.header className={styles.header} key="header">
-      <div className={styles.content}>
+    <motion.header
+      className="w-full h-16 bg-white/[.86] backdrop-blur-sm flex justify-center fixed top-0 left-0 border-b border-solid border-black/5 shadow-sm"
+      key="header"
+    >
+      <div className="w-website h-auto flex justify-between items-center">
         {blogSettings.logo ? (
           <picture onClick={() => router.push("/")}>
             <source srcSet={blogSettings.logo} type="image/png" />
-            <img src={blogSettings.logo} alt="Logo" className={styles.logo} />
+            <img
+              src={blogSettings.logo}
+              alt="Logo"
+              className="h-[30px] cursor-pointer"
+            />
           </picture>
         ) : null}
 
-        <div className={styles.navigation}>
+        <div className="flex items-center space-x-6">
           {blogSettings.navigation?.map((nav) => (
             <motion.div
               className={classNames(
-                styles.navigationItem,
-                checkIfRouterActive(nav.url) && styles.routerActive
+                "relative text-base",
+                checkIfRouterActive(nav.url) && "font-semibold text-title"
               )}
               key={nav.url}
               layout
             >
-              <Link href={urlFormat("page", nav.url)}>{nav.label}</Link>
+              <Link href={urlFormat("page", nav.url)}>
+                <a className="text-text">{nav.label}</a>
+              </Link>
 
               <AnimatePresence>
                 {checkIfRouterActive(nav.url) && (
                   <motion.div
-                    className={styles.routerActiveDot}
+                    className="w-1.5 h-1.5 absolute -bottom-2 bg-main left-1/2 -mr-[3px] rounded-full"
                     variants={fadeInOutVariants}
                     initial="fadeOut"
                     animate="fadeIn"

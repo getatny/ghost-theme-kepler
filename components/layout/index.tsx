@@ -33,8 +33,8 @@ const LayoutComponent: FC<PropsWithChildren<LayoutComponentProps>> = memo(
 
         <HeadComponent />
 
-        <div className={styles.mainWrapper}>
-          <div className={styles.content}>{children}</div>
+        <div className="pt-[112px] flex justify-center min-h-website">
+          <div className="w-website">{children}</div>
         </div>
 
         <FooterComponent />

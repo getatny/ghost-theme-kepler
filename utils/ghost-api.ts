@@ -1,8 +1,9 @@
 import GhostContentApi from "@tryghost/content-api";
+import LocalConfig from "../.env.local.json";
 
 const GhostApi = new GhostContentApi({
-  key: "4f01ea0e961248ab496eaeaf03",
-  url: "http://localhost:2368",
+  key: LocalConfig.key,
+  url: LocalConfig.url,
   version: "v5.0",
 });
 
