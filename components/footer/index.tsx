@@ -11,7 +11,7 @@ const FooterComponent = memo(() => {
       <div className="h-11">
         <picture>
           <source srcSet={blogSettings.logo} type="image/png" />
-          <img src={blogSettings.logo} alt="Logo" className="h-11" />
+          <img src={blogSettings.logo} alt="Logo" className="h-10" />
         </picture>
       </div>
 

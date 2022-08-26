@@ -88,20 +88,33 @@ const HeadComponent: FC = memo(() => {
       <AnimatePresence>
         {menuOpened && (
           <motion.div
-            className="fixed w-screen h-screen top-0 left-0 z-40 flex items-center justify-center small:hidden bg-white"
+            className="fixed w-screen h-screen top-0 left-0 z-40 flex items-center justify-center  small:hidden bg-white"
             key="mobile-navigation-panel"
             initial="fadeOut"
             animate="fadeIn"
             exit="fadeOut"
             variants={fadeInOutVariants}
           >
-            <div>
-              <motion.img
-                src={blogSettings.logo}
-                alt="Logo"
-                className="cursor-pointer h-9"
-                layoutId="header-logo"
-              />
+            <motion.img
+              src={blogSettings.logo}
+              alt="Logo"
+              className="h-10 absolute top-[88px]"
+              layoutId="header-logo"
+            />
+
+            <div className="flex justify-center items-center flex-col space-y-6">
+              {blogSettings.navigation?.map((nav) => (
+                <Link href={urlFormat("page", nav.url)} key={nav.url}>
+                  <a
+                    className={classNames(
+                      "text-text text-xl w-40 h-10 text-center leading-[40px] rounded-full active:bg-main active:text-white",
+                      checkIfRouterActive(nav.url) && "bg-black/5"
+                    )}
+                  >
+                    {nav.label}
+                  </a>
+                </Link>
+              ))}
             </div>
           </motion.div>
         )}

@@ -43,7 +43,7 @@ const Post: NextPage<PostOrPageProps> = memo(({ content }) => {
           <motion.img
             src={content.feature_image}
             alt="封面"
-            className="w-full h-80 mt-12 rounded-lg overflow-hidden object-cover object-center shadow-sm"
+            className="w-full h-40 small:h-80 mt-8 small:mt-12 rounded-lg overflow-hidden object-cover object-center shadow-sm"
             key={`feature-img-${content.slug}`}
             layoutId={`feature-img-${content.slug}`}
           />
@@ -80,7 +80,7 @@ const Post: NextPage<PostOrPageProps> = memo(({ content }) => {
           <div className="flex items-center">
             {content.tags?.map((tag) => (
               <div
-                className="px-3 py-[6px] rounded bg-black/5 text-sm leading-none"
+                className="px-3 py-[6px] rounded bg-black/5 text-sm leading-none text-[#5c5c5c]"
                 key={tag.id}
               >
                 # {tag.name}
