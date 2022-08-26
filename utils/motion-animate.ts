@@ -28,3 +28,23 @@ export const slideUpDownVariants = {
     y: 100,
   },
 };
+
+export const sidebar = {
+  open: {
+    clipPath: `circle(calc(100vh * 2) at calc(100vw - 36px) 32px)`,
+    transition: {
+      type: "spring",
+      stiffness: 20,
+      restDelta: 2,
+    },
+  },
+  closed: {
+    clipPath: "circle(0px at calc(100vw - 36px) 32px)",
+    transition: {
+      delay: 0.5,
+      type: "spring",
+      stiffness: 400,
+      damping: 40,
+    },
+  },
+};

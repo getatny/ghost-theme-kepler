@@ -1,11 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  purge: ["./pages/**/*.tsx", "./components/**/*.tsx"],
-  content: [],
+  content: ["./pages/**/*.tsx", "./components/**/*.tsx"],
   theme: {
     extend: {
       spacing: {
-        website: "940px",
+        website: "1004px",
       },
       colors: {
         title: "#1f1f1f",
@@ -15,6 +14,10 @@ module.exports = {
       },
       minHeight: {
         website: "calc(100vh - 196px)",
+      },
+      screens: {
+        small: "668px",
+        normal: "1004px",
       },
     },
   },

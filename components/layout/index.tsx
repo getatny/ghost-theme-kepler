@@ -34,7 +34,7 @@ const LayoutComponent: FC<PropsWithChildren<LayoutComponentProps>> = memo(
         <HeadComponent />
 
         <div className="pt-[112px] flex justify-center min-h-website">
-          <div className="w-website">{children}</div>
+          <div className="w-website small:px-8 px-6">{children}</div>
         </div>
 
         <FooterComponent />

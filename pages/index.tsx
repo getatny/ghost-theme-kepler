@@ -1,7 +1,12 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m, motion } from "framer-motion";
 import { Col, Row } from "antd";
 import GhostApi, { getTags } from "../utils/ghost-api";
-import type { Pagination, PostsOrPages, Tags } from "@tryghost/content-api";
+import type {
+  Pagination,
+  PostOrPage,
+  PostsOrPages,
+  Tags,
+} from "@tryghost/content-api";
 import { useMemo, useState } from "react";
 
 import { BlocksAndArrows } from "@icon-park/react";
@@ -16,18 +21,30 @@ const Home: NextPage<{
   featuredPosts: PostsOrPages;
   pagination: Pagination;
   tags: Tags;
-}> = (props) => {
-  const { normalPosts, featuredPosts, pagination, tags } = props;
+}> = ({ normalPosts, featuredPosts, pagination, tags }) => {
+  const [allPosts, setAllPosts] = useState<PostsOrPages>(normalPosts);
   const [selectedTag, setSelectedTag] = useState<string>("all");
 
+  const extendTags = useMemo(() => {
+    return tags
+      ? [
+          {
+            id: "all",
+            slug: "all",
+            name: "All",
+          },
+          ...tags,
+        ]
+      : undefined;
+  }, [tags]);
+
   const filteredPosts = useMemo(() => {
-    return normalPosts.filter((post) =>
+    return allPosts.filter((post) =>
       selectedTag === "all"
         ? true
-        : post.tags &&
-          post.tags.findIndex((tag) => tag.slug === selectedTag) > -1
+        : (post.tags?.findIndex((tag) => tag.slug === selectedTag) ?? -1) > -1
     );
-  }, [normalPosts, selectedTag]);
+  }, [allPosts, selectedTag]);
 
   return (
     <>
@@ -36,25 +53,15 @@ const Home: NextPage<{
           Posts
         </div>
 
-        {tags && (
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-sm text-second flex items-center">
+        {extendTags && (
+          <div className="absolute top-1/2 right-0 small:right-1/2 small:translate-x-1/2 -translate-y-1/2 text-sm text-second flex items-center">
             <BlocksAndArrows
               theme="outline"
               strokeWidth={4}
               className="flex text-main mr-3"
             />
 
-            <div
-              className={classNames(
-                styles.tag,
-                selectedTag === "all" && styles.active
-              )}
-              onClick={() => setSelectedTag("all")}
-            >
-              All
-            </div>
-
-            {tags.map((tag) => (
+            {extendTags.map((tag) => (
               <div
                 className={classNames(
                   styles.tag,
@@ -70,7 +77,7 @@ const Home: NextPage<{
         )}
       </div>
 
-      <div className="grid grid-cols-3 gap-6 mt-8">
+      <div className="grid gap-6 mt-8 small:grid-cols-2 normal:grid-cols-3">
         <AnimatePresence>
           {filteredPosts.map((post) => (
             <motion.div
