@@ -4,7 +4,7 @@ import LocalConfig from "../.env.local.json";
 const GhostApi = new GhostContentApi({
   key: LocalConfig.key,
   url: LocalConfig.url,
-  version: "v5.0",
+  version: LocalConfig.version as any,
 });
 
 export const getSettings = async () => {
