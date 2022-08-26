@@ -11,6 +11,7 @@ module.exports = {
         title: "#1f1f1f",
         text: "#434343",
         main: "rgba(109, 147, 100, 1)",
+        second: "#bababa",
       },
       minHeight: {
         website: "calc(100vh - 196px)",

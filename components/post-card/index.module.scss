@@ -1,57 +1,11 @@
-@import "../../styles/variables.scss";
-
-.postItem {
-  cursor: pointer;
-
-  &:hover {
-    .featureImgBlock {
-      box-shadow: 0px 4px 20px -4px rgba(0, 0, 0, 0.24);
-    }
-  }
-}
-
 .featureImgBlock {
-  width: 100%;
-  height: 140px;
-  border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  object-fit: cover;
-  object-position: center;
-  box-shadow: 0px 2px 20px -10px rgba(0, 0, 0, 0.08);
-  transition: box-shadow 0.35s ease;
+  @apply hover:shadow-xl shadow-black/5 w-full h-[140px] rounded-lg flex justify-center items-center object-cover object-center shadow-sm transition-shadow duration-300;
 }
 
 .noFeatureImgBlockText {
   & > span {
-    color: #fff;
-    font-size: 2rem;
-    position: relative;
-    transform: rotateY(15deg);
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
-    background-image: linear-gradient(90deg, #fff, hsla(0, 0%, 100%, 0.03) 90%);
+    @apply text-white text-3xl relative rotate-[15deg] bg-gradient-to-r from-white via-[hsla(0,0%,100%,0.03)_75%];
   }
-}
-
-.postTitle,
-.time {
-  color: $text-color;
-  padding: 0 8px;
-}
-
-.postTitle {
-  height: 48px;
-  display: block;
-  width: 100%;
-  font-size: 16px;
-  line-height: 24px;
-  margin-top: 16px;
-}
-
-.time {
-  font-size: 14px;
-  margin-top: 8px;
-  line-height: 21px;
 }

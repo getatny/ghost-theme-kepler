@@ -1,5 +1,3 @@
-import "antd/lib/grid/style/index.css";
-
 import { AnimatePresence, motion } from "framer-motion";
 import { Col, Row } from "antd";
 import GhostApi, { getTags } from "../utils/ghost-api";
@@ -33,12 +31,18 @@ const Home: NextPage<{
 
   return (
     <>
-      <div className={styles.blockBind}>
-        <div className={styles.areaTitle}>Posts</div>
+      <div className="relative">
+        <div className="text-lg leading-none relative font-semibold inline-block z-[1] after:content-[''] after:w-full after:h-1 after:absolute after:bottom-0 after:left-0 after:bg-main after:-z-[1] after:rounded-[1]">
+          Posts
+        </div>
 
         {tags && (
-          <div className={styles.categoriesSwitcher}>
-            <BlocksAndArrows theme="outline" strokeWidth={4} />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-sm text-second flex items-center">
+            <BlocksAndArrows
+              theme="outline"
+              strokeWidth={4}
+              className="flex text-main mr-3"
+            />
 
             <div
               className={classNames(
@@ -66,12 +70,10 @@ const Home: NextPage<{
         )}
       </div>
 
-      <Row style={{ marginTop: 32 }} gutter={[24, 24]}>
+      <div className="grid grid-cols-3 gap-6 mt-8">
         <AnimatePresence>
           {filteredPosts.map((post) => (
             <motion.div
-              className="ant-col ant-col-8"
-              style={{ paddingLeft: 12, paddingRight: 12 }}
               key={post.slug}
               variants={bouceInOutVariants}
               initial="bounceOut"
@@ -82,7 +84,7 @@ const Home: NextPage<{
             </motion.div>
           ))}
         </AnimatePresence>
-      </Row>
+      </div>
     </>
   );
 };

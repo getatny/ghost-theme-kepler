@@ -20,7 +20,7 @@ const PostCard: FC<PostCardProps> = memo(({ postInfo }) => {
 
   return (
     <motion.div
-      className={styles.postItem}
+      className="cursor-pointer "
       onClick={() => router.push(urlFormat("post", postInfo.slug))}
       layout
     >
@@ -46,13 +46,15 @@ const PostCard: FC<PostCardProps> = memo(({ postInfo }) => {
       )}
 
       <motion.div
-        className={styles.postTitle}
+        className="text-text px-2 h-12 w-full block text-base mt-4"
         layoutId={`content-title-${postInfo.slug}`}
         key={`content-title-${postInfo.slug}`}
       >
         {postInfo.title}
       </motion.div>
-      <div className={styles.time}>{formatDate(postInfo.published_at!)}</div>
+      <div className="text-text px-2 text-sm mt-2">
+        {formatDate(postInfo.published_at!)}
+      </div>
     </motion.div>
   );
 });
