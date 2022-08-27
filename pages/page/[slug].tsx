@@ -106,7 +106,7 @@ export const getStaticProps = async (context: any) => {
   let content;
 
   try {
-    content = await getPostContent(context.params.slug);
+    content = await getPageContent(context.params.slug);
   } catch (e) {
     return {
       notFound: true,
