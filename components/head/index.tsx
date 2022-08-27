@@ -45,17 +45,16 @@ const HeadComponent: FC = memo(() => {
   return (
     <>
       <header
-        className="w-full h-16 bg-white/[.86] backdrop-blur-sm flex justify-center z-30 border-b border-solid border-black/5 shadow-sm"
+        className="w-full h-16 bg-white/[.86] backdrop-blur-sm flex justify-center z-30 border-b border-solid border-black/5 shadow-sm fixed top-0 left-0"
         key="header"
       >
         <div className="w-website small:px-8 px-6 h-auto flex justify-between items-center">
           {blogSettings.logo ? (
-            <motion.img
+            <img
               src={blogSettings.logo}
               alt="Logo"
               className="h-[30px] cursor-pointer"
               onClick={() => router.push("/")}
-              layoutId="header-logo"
             />
           ) : null}
 
@@ -117,11 +116,10 @@ const HeadComponent: FC = memo(() => {
               <Close theme="filled" strokeWidth={4} />
             </div>
 
-            <motion.img
+            <img
               src={blogSettings.logo}
               alt="Logo"
               className="h-10 absolute top-[88px]"
-              layoutId="header-logo"
             />
 
             <div className="flex justify-center items-center flex-col space-y-6">

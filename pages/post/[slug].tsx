@@ -51,7 +51,7 @@ const Post: NextPage<PostOrPageProps> = memo(({ content }) => {
   }, [content]);
 
   return (
-    <div key={`content-${content.slug}`}>
+    <div key={`content-${content.slug}`} className="w-full">
       {content.feature_image && (
         <>
           <motion.img
