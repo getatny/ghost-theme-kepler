@@ -103,9 +103,11 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async (context: any) => {
-  const content = await getPageContent(context.params.slug);
+  let content;
 
-  if (!content) {
+  try {
+    content = await getPostContent(context.params.slug);
+  } catch (e) {
     return {
       notFound: true,
     };
