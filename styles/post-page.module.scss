@@ -94,7 +94,11 @@
   }
 
   figure {
-    @apply my-8 flex justify-center;
+    @apply my-8 flex justify-center items-center flex-col space-y-2 text-center;
+
+    figcaption {
+      @apply text-second text-sm;
+    }
   }
 
   hr {
