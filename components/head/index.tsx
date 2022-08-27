@@ -38,7 +38,7 @@ const HeadComponent: FC = memo(() => {
     if (menuOpened) {
       setMenuOpened(false);
     }
-  }, [router]);
+  }, [router, menuOpened]);
 
   return (
     <>
