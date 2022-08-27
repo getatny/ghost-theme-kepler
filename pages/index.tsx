@@ -1,20 +1,15 @@
 import { AnimatePresence, m, motion } from "framer-motion";
-import { Col, Row } from "antd";
-import GhostApi, { getTags } from "../utils/ghost-api";
-import type {
-  Pagination,
-  PostOrPage,
-  PostsOrPages,
-  Tags,
-} from "@tryghost/content-api";
+import type { Pagination, PostsOrPages, Tags } from "@tryghost/content-api";
 import { useMemo, useState } from "react";
 
 import { BlocksAndArrows } from "@icon-park/react";
+import GhostApi from "../utils/ghost-api";
 import type { NextPage } from "next";
 import PostCard from "@/components/post-card";
 import { bouceInOutVariants } from "@/utils/motion-animate";
 import classNames from "classnames";
 import styles from "../styles/index.module.scss";
+import uniqBy from "lodash.uniqby";
 
 const Home: NextPage<{
   normalPosts: PostsOrPages;
@@ -110,7 +105,10 @@ export const getStaticProps = async () => {
 
   const pagination = featuredPosts.meta.pagination;
 
-  const tags = await getTags();
+  const tags = uniqBy(
+    normalPosts.map((post) => post.primary_tag),
+    "id"
+  );
 
   if (!normalPosts && !featuredPosts) {
     return {

@@ -1,3 +1,5 @@
+import "highlight.js/styles/atom-one-dark.css";
+
 /* eslint-disable @next/next/no-img-element */
 import GhostApi, { getPostContent } from "@/utils/ghost-api";
 import { fadeInOutVariants, slideUpDownVariants } from "@/utils/motion-animate";
@@ -5,10 +7,10 @@ import { memo, useEffect } from "react";
 
 import { NextPage } from "next";
 import { PostOrPage } from "@tryghost/content-api";
-import Script from "next/script";
 import Toc from "tocbot";
 import classNames from "classnames";
 import { formatDate } from "@/utils/commons";
+import hljs from "highlight.js";
 import { motion } from "framer-motion";
 import styles from "../../styles/post-page.module.scss";
 
@@ -35,6 +37,15 @@ const Post: NextPage<PostOrPageProps> = memo(({ content }) => {
       scrollSmoothOffset: -112,
     });
   }, []);
+
+  useEffect(() => {
+    // 代码高亮
+    if (content.html?.indexOf("pre")) {
+      document.querySelectorAll("pre code").forEach((block: any) => {
+        hljs.highlightBlock(block);
+      });
+    }
+  }, [content]);
 
   return (
     <div key={`content-${content.slug}`}>
@@ -77,7 +88,7 @@ const Post: NextPage<PostOrPageProps> = memo(({ content }) => {
         initial="fadeOut"
       >
         {content.tags && content.tags.length > 0 && (
-          <div className="flex items-center">
+          <div className="flex items-center space-x-4">
             {content.tags?.map((tag) => (
               <div
                 className="px-3 py-[6px] rounded bg-black/5 text-sm leading-none text-[#5c5c5c]"

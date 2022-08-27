@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { AnimatePresence, motion } from "framer-motion";
 import { Close, HamburgerButton } from "@icon-park/react";
-import { FC, memo, useCallback, useContext, useState } from "react";
+import { FC, memo, useCallback, useContext, useEffect, useState } from "react";
 import { fadeInOutVariants, sidebar } from "@/utils/motion-animate";
 
 import Link from "next/link";
@@ -23,6 +23,22 @@ const HeadComponent: FC = memo(() => {
     },
     [router]
   );
+
+  useEffect(() => {
+    if (menuOpened) {
+      document.body.style.height = "100vh";
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.height = "100%";
+      document.body.style.overflow = "auto";
+    }
+  }, [menuOpened]);
+
+  useEffect(() => {
+    if (menuOpened) {
+      setMenuOpened(false);
+    }
+  }, [router]);
 
   return (
     <>
@@ -75,7 +91,7 @@ const HeadComponent: FC = memo(() => {
       </header>
 
       <div
-        className="flex small:hidden items-center text-2xl leading-none text-title cursor-pointer absolute top-5 right-6 small:right-8 z-50"
+        className="flex small:hidden items-center text-2xl leading-none text-title cursor-pointer fixed top-5 right-6 small:right-8 z-50"
         onClick={() => setMenuOpened((menuOpened) => !menuOpened)}
       >
         {menuOpened ? (

@@ -84,7 +84,7 @@
   }
 
   pre {
-    padding: 2rem;
+    @apply my-8 small:px-8;
 
     code {
       @include font-code;
@@ -106,6 +106,10 @@
 
   blockquote {
     border-color: $main-color;
+  }
+
+  figure {
+    @apply my-8 flex justify-center;
   }
 
   hr {
