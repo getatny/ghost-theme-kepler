@@ -36,6 +36,9 @@ const Post: NextPage<PostOrPageProps> = memo(({ content }) => {
       headingsOffset: 112,
       scrollSmoothOffset: -112,
     });
+
+    // 保证页面进入时在顶部
+    document.querySelector("#main-content")?.scroll({ top: 0 });
   }, []);
 
   useEffect(() => {
@@ -81,14 +84,14 @@ const Post: NextPage<PostOrPageProps> = memo(({ content }) => {
       </motion.div>
 
       <motion.div
-        className="flex justify-between mt-4"
+        className="flex justify-between mt-4 flex-wrap items-center"
         key={`content-info-${content.slug}`}
         variants={fadeInOutVariants}
         animate="fadeIn"
         initial="fadeOut"
       >
         {content.tags && content.tags.length > 0 && (
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 mb-4">
             {content.tags?.map((tag) => (
               <div
                 className="px-3 py-[6px] rounded bg-black/5 text-sm leading-none text-[#5c5c5c]"
@@ -100,7 +103,9 @@ const Post: NextPage<PostOrPageProps> = memo(({ content }) => {
           </div>
         )}
 
-        <div className="text-second">{formatDate(content.published_at!)}</div>
+        <div className="text-second mb-4">
+          {formatDate(content.published_at!)}
+        </div>
       </motion.div>
 
       <motion.div

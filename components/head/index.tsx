@@ -2,7 +2,11 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Close, HamburgerButton } from "@icon-park/react";
 import { FC, memo, useCallback, useContext, useEffect, useState } from "react";
-import { fadeInOutVariants, sidebar } from "@/utils/motion-animate";
+import {
+  fadeInOutVariants,
+  sidebar,
+  slideInOutVariants,
+} from "@/utils/motion-animate";
 
 import Link from "next/link";
 import { blogSettingsContext } from "@/utils/context";
@@ -35,15 +39,13 @@ const HeadComponent: FC = memo(() => {
   }, [menuOpened]);
 
   useEffect(() => {
-    if (menuOpened) {
-      setMenuOpened(false);
-    }
-  }, [router, menuOpened]);
+    setMenuOpened(false);
+  }, [router]);
 
   return (
     <>
       <header
-        className="w-full h-16 bg-white/[.86] backdrop-blur-sm flex justify-center fixed top-0 left-0 z-30 border-b border-solid border-black/5 shadow-sm"
+        className="w-full h-16 bg-white/[.86] backdrop-blur-sm flex justify-center z-30 border-b border-solid border-black/5 shadow-sm"
         key="header"
       >
         <div className="w-website small:px-8 px-6 h-auto flex justify-between items-center">
@@ -87,30 +89,34 @@ const HeadComponent: FC = memo(() => {
               </motion.div>
             ))}
           </div>
+
+          <div
+            className="flex small:hidden items-center text-2xl leading-none text-title cursor-pointer absolute top-5 right-6 small:right-8 z-50"
+            onClick={() => setMenuOpened((menuOpened) => !menuOpened)}
+          >
+            <HamburgerButton theme="filled" strokeWidth={4} />
+          </div>
         </div>
       </header>
-
-      <div
-        className="flex small:hidden items-center text-2xl leading-none text-title cursor-pointer fixed top-5 right-6 small:right-8 z-50"
-        onClick={() => setMenuOpened((menuOpened) => !menuOpened)}
-      >
-        {menuOpened ? (
-          <Close theme="filled" strokeWidth={4} />
-        ) : (
-          <HamburgerButton theme="filled" strokeWidth={4} />
-        )}
-      </div>
 
       <AnimatePresence>
         {menuOpened && (
           <motion.div
             className="fixed w-screen h-screen top-0 left-0 z-40 flex items-center justify-center  small:hidden bg-white"
             key="mobile-navigation-panel"
-            initial="fadeOut"
-            animate="fadeIn"
-            exit="fadeOut"
-            variants={fadeInOutVariants}
+            initial="slideOut"
+            animate="slideIn"
+            exit="slideOut"
+            variants={slideInOutVariants}
+            transition={{ bounce: false }}
           >
+            <div
+              className="flex small:hidden items-center text-2xl leading-none text-title cursor-pointer absolute top-5 right-6 small:right-8 z-50"
+              onClick={() => setMenuOpened((menuOpened) => !menuOpened)}
+            >
+              <Close theme="filled" strokeWidth={4} />
+            </div>
+
             <motion.img
               src={blogSettings.logo}
               alt="Logo"

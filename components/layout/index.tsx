@@ -31,15 +31,21 @@ const LayoutComponent: FC<PropsWithChildren<LayoutComponentProps>> = memo(
           <title key="blog-title">{blogSettings?.title || "加载中..."}</title>
         </Head>
 
-        <HeadComponent />
+        <div className="flex flex-col h-screen overflow-hidden">
+          <div>
+            <HeadComponent />
+          </div>
 
-        <div className="pt-[112px] flex justify-center min-h-website">
-          <div className="normal:w-website w-screen small:px-8 px-6">
-            {children}
+          <div className="flex-1 overflow-y-auto" id="main-content">
+            <div className="flex pt-12 justify-center min-h-website">
+              <div className="normal:w-website w-screen small:px-8 px-6">
+                {children}
+              </div>
+            </div>
+
+            <FooterComponent />
           </div>
         </div>
-
-        <FooterComponent />
       </blogSettingsContext.Provider>
     );
   }

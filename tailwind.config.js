@@ -13,7 +13,7 @@ module.exports = {
         second: "#bababa",
       },
       minHeight: {
-        website: "calc(100vh - 196px)",
+        website: "calc(100vh - 260px)",
       },
       screens: {
         small: "668px",

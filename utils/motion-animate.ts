@@ -29,6 +29,17 @@ export const slideUpDownVariants = {
   },
 };
 
+export const slideInOutVariants = {
+  slideIn: {
+    opacity: 1,
+    x: 0,
+  },
+  slideOut: {
+    opacity: 0,
+    x: "100vw",
+  },
+};
+
 export const sidebar = {
   open: {
     clipPath: `circle(calc(100vh * 2) at calc(100vw - 36px) 32px)`,
