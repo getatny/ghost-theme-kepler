@@ -90,7 +90,7 @@
   }
 
   blockquote {
-    border-color: $main-color;
+    @apply border-l-4 border-main pl-6 py-3 pr-3 mb-5 bg-black/5;
   }
 
   figure {

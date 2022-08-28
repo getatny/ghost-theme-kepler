@@ -3,6 +3,7 @@ import type { Pagination, PostOrPage, Tags } from "@tryghost/content-api";
 import { useCallback, useMemo, useState } from "react";
 
 import { BlocksAndArrows } from "@icon-park/react";
+import FeatureBox from "@/components/feature-box";
 import GhostApi from "../utils/ghost-api";
 import type { NextPage } from "next";
 import PaginationComponent from "@/components/pagination";
@@ -48,6 +49,8 @@ const Home: NextPage<{
 
   return (
     <>
+      <FeatureBox posts={featuredPosts} />
+
       <div className="relative">
         <div className="text-lg leading-none relative font-semibold inline-block z-[1] after:content-[''] after:w-full after:h-1 after:absolute after:bottom-0 after:left-0 after:bg-main after:-z-[1] after:rounded-[1]">
           Posts
