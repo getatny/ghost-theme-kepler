@@ -1,10 +1,11 @@
-import { AnimatePresence, m, motion } from "framer-motion";
-import type { Pagination, PostsOrPages, Tags } from "@tryghost/content-api";
-import { useMemo, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import type { Pagination, PostOrPage, Tags } from "@tryghost/content-api";
+import { useCallback, useMemo, useState } from "react";
 
 import { BlocksAndArrows } from "@icon-park/react";
 import GhostApi from "../utils/ghost-api";
 import type { NextPage } from "next";
+import PaginationComponent from "@/components/pagination";
 import PostCard from "@/components/post-card";
 import { bouceInOutVariants } from "@/utils/motion-animate";
 import classNames from "classnames";
@@ -12,12 +13,12 @@ import styles from "../styles/index.module.scss";
 import uniqBy from "lodash.uniqby";
 
 const Home: NextPage<{
-  normalPosts: PostsOrPages;
-  featuredPosts: PostsOrPages;
+  normalPosts: PostOrPage[];
+  featuredPosts: PostOrPage[];
   pagination: Pagination;
   tags: Tags;
 }> = ({ normalPosts, featuredPosts, pagination, tags }) => {
-  const [allPosts, setAllPosts] = useState<PostsOrPages>(normalPosts);
+  const [allPosts, setAllPosts] = useState<PostOrPage[]>(normalPosts);
   const [selectedTag, setSelectedTag] = useState<string>("all");
 
   const extendTags = useMemo(() => {
@@ -40,6 +41,10 @@ const Home: NextPage<{
         : (post.tags?.findIndex((tag) => tag.slug === selectedTag) ?? -1) > -1
     );
   }, [allPosts, selectedTag]);
+
+  const onPostsLoaded = useCallback((posts: PostOrPage[]) => {
+    setAllPosts((allPosts) => [...allPosts, ...posts]);
+  }, []);
 
   return (
     <>
@@ -87,6 +92,11 @@ const Home: NextPage<{
           ))}
         </AnimatePresence>
       </div>
+
+      <PaginationComponent
+        initInfo={pagination}
+        onPostsLoaded={onPostsLoaded}
+      />
     </>
   );
 };
@@ -103,10 +113,10 @@ export const getStaticProps = async () => {
     filter: "featured:true",
   });
 
-  const pagination = featuredPosts.meta.pagination;
+  const pagination = normalPosts.meta.pagination;
 
   const tags = uniqBy(
-    normalPosts.map((post) => post.primary_tag),
+    normalPosts.map((post) => post.primary_tag).filter((tag) => !!tag),
     "id"
   );
 

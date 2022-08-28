@@ -6,6 +6,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  console.log("收到 webhook 请求：", req.body);
+
   // Check for secret to confirm this is a valid request
   if (req.query.secret !== LocalConfig.key) {
     return res.status(401).json({ message: "Invalid token" });
