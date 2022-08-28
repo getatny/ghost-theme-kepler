@@ -18,6 +18,11 @@ export default async function handler(
     // e.g. for "/blog/[slug]" this should be "/blog/post-1"
     await res.revalidate("/");
     await res.revalidate("/post/" + req.body.post.current.slug);
+
+    if (req.body.post.previous?.slug) {
+      await res.revalidate("/post/" + req.body.post.previous.slug);
+    }
+
     return res.json({
       success: true,
       message:
