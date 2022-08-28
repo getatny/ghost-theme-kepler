@@ -38,7 +38,7 @@ const Post: NextPage<PostOrPageProps> = memo(({ content }) => {
     });
 
     // 保证页面进入时在顶部
-    document.querySelector("#main-content")?.scroll({ top: 0 });
+    document.body.scroll({ top: 0 });
   }, []);
 
   useEffect(() => {
