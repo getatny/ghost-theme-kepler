@@ -8,6 +8,9 @@ export default async function handler(
 ) {
   console.log("收到 webhook 请求：", req.body);
 
+  const currentSlug = req.body.page.current?.slug;
+  const previousSlug = req.body.page.previous?.slug;
+
   // Check for secret to confirm this is a valid request
   if (req.query.secret !== LocalConfig.key) {
     return res.status(401).json({ message: "Invalid token" });
@@ -17,11 +20,8 @@ export default async function handler(
     // this should be the actual path not a rewritten path
     // e.g. for "/blog/[slug]" this should be "/blog/post-1"
     await res.revalidate("/");
-    await res.revalidate("/page/" + req.body.page.current.slug);
-
-    if (req.body.page.previous?.slug) {
-      await res.revalidate("/page/" + req.body.page.previous.slug);
-    }
+    currentSlug && (await res.revalidate("/page/" + currentSlug));
+    previousSlug && (await res.revalidate("/page/" + previousSlug));
 
     return res.json({
       success: true,

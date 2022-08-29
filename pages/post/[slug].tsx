@@ -139,17 +139,21 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context: any) => {
   let content;
+  const slug = context.params.slug;
 
   try {
-    content = await getPostContent(context.params.slug);
+    content = await getPostContent(slug);
+    console.log("generate post: ", slug, content);
   } catch (e) {
+    console.error("generate post: ", slug, "failed");
+
     return {
       notFound: true,
     };
   }
 
   return {
-    props: { content, key: context.params.slug },
+    props: { content, key: slug },
   };
 };
 

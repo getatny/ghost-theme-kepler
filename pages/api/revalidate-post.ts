@@ -8,6 +8,9 @@ export default async function handler(
 ) {
   console.log("收到 webhook 请求：", req.body);
 
+  const currentSlug = req.body.post.current?.slug;
+  const previousSlug = req.body.post.previous?.slug;
+
   // Check for secret to confirm this is a valid request
   if (req.query.secret !== LocalConfig.key) {
     return res.status(401).json({ message: "Invalid token" });
@@ -17,22 +20,18 @@ export default async function handler(
     // this should be the actual path not a rewritten path
     // e.g. for "/blog/[slug]" this should be "/blog/post-1"
     await res.revalidate("/");
-    await res.revalidate("/post/" + req.body.post.current.slug);
-
-    if (req.body.post.previous?.slug) {
-      await res.revalidate("/post/" + req.body.post.previous.slug);
-    }
+    currentSlug && (await res.revalidate("/post/" + currentSlug));
+    previousSlug && (await res.revalidate("/post/" + previousSlug));
 
     return res.json({
       success: true,
       message:
-        "Index and Post named " +
-        req.body.post.current.slug +
-        " generated successfully!",
+        "Index and Post named " + currentSlug + " generated successfully!",
     });
   } catch (err) {
     // If there was an error, Next.js will continue
     // to show the last successfully generated page
+    console.log("处理 webhook 失败", err);
     return res.status(500).send("Error revalidating");
   }
 }
