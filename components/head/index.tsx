@@ -66,7 +66,6 @@ const HeadComponent: FC = memo(() => {
                   checkIfRouterActive(nav.url) && "font-semibold text-title"
                 )}
                 key={nav.url}
-                layout
               >
                 <Link href={urlFormat("page", nav.url)}>
                   <a className="text-text">{nav.label}</a>

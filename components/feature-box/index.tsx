@@ -76,6 +76,7 @@ const FeatureBox: FC<FeatureBoxProps> = memo(({ posts }) => {
                   className="w-full h-full object-cover object-center absolute z-0 rounded-lg"
                   alt={`文章 ${posts[imageIndex]!.title} 封面`}
                   key={page}
+                  layoutId={`feature-img-${posts[imageIndex].slug}`}
                   custom={direction}
                   variants={variants}
                   initial="enter"

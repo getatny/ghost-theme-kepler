@@ -83,13 +83,12 @@ const Post: NextPage<PostOrPageProps> = memo(({ content }) => {
             </>
           )}
 
-          <motion.div
+          <div
             key={`content-title-${content.slug}`}
-            layoutId={`content-title-${content.slug}`}
             className="mt-12 text-title font-semibold text-[28px]"
           >
             {content.title}
-          </motion.div>
+          </div>
 
           <motion.div
             className="flex justify-between mt-4 flex-wrap items-center"

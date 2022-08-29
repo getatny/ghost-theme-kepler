@@ -45,13 +45,12 @@ const PostCard: FC<PostCardProps> = memo(({ postInfo }) => {
         </motion.div>
       )}
 
-      <motion.div
+      <div
         className="text-text px-2 h-12 w-full block text-base mt-4"
-        layoutId={`content-title-${postInfo.slug}`}
         key={`content-title-${postInfo.slug}`}
       >
         {postInfo.title}
-      </motion.div>
+      </div>
       <div className="text-text px-2 text-sm mt-2">
         {formatDate(postInfo.published_at!)}
       </div>
