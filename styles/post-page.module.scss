@@ -11,10 +11,8 @@
     margin-bottom: 1.25rem;
 
     & > code {
-      padding: 0.25rem 0.5rem;
-      overflow-wrap: break-word;
       @include font-code;
-      background-color: rgba(134, 138, 147, 0.2);
+      @apply px-2 break-words bg-[rgba(134,138,147,0.2)] rounded-[4px];
     }
 
     a:not([data-fancybox]) {
@@ -90,7 +88,7 @@
   }
 
   blockquote {
-    @apply border-l-4 border-main pl-6 py-3 pr-3 mb-5 bg-black/5;
+    @apply border-l-4 border-main pl-6 py-3 pr-3 my-10 bg-black/5;
   }
 
   figure {
