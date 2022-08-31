@@ -152,7 +152,7 @@ export const getStaticProps = async (context: any) => {
 
   try {
     content = await getPostContent(slug);
-    console.log("generate post: ", slug, content);
+    console.log("generate post: ", slug);
   } catch (e) {
     console.error("generate post: ", slug, "failed");
 

@@ -105,6 +105,8 @@ const Home: NextPage<{
 };
 
 export const getStaticProps = async () => {
+  console.log("generate index");
+
   const normalPosts = await GhostApi.posts.browse({
     limit: 9,
     include: ["tags"],
