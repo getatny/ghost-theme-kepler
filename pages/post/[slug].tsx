@@ -66,13 +66,15 @@ const Post: NextPage<PostOrPageProps> = memo(({ content }) => {
               <motion.img
                 src={content.feature_image}
                 alt="封面"
-                className="w-full h-40 small:h-80 mt-8 small:mt-12 rounded-lg overflow-hidden object-cover object-center shadow-sm"
+                className="w-full h-40 hidden small:block small:h-80 mt-8 small:mt-12 rounded-lg overflow-hidden object-cover object-center shadow-sm"
                 key={`feature-img-${content.slug}`}
                 layoutId={`feature-img-${content.slug}`}
               />
 
+              <div className="block small:hidden h-40 w-full mt-8" />
+
               <motion.div
-                className="w-screen h-[480px] absolute top-0 left-0 -z-[1] after:content-[''] after:w-full after:h-full after:absolute after:top-0 after:left-0 after:bg-gradient-to-t after:from-white after:via-[rgba(255,255,255,0.83)_21.96%] after:backdrop-blur-sm"
+                className="w-screen h-[480px] absolute top-0 left-0 -z-[1] after:content-[''] after:w-full after:h-full after:absolute after:top-0 after:left-0 after:bg-gradient-to-t after:from-white after:via-[rgba(255,255,255,0.83)_21.96%] small:after:backdrop-blur-sm"
                 key={`feature-img-bg-${content.slug}`}
               >
                 <img
