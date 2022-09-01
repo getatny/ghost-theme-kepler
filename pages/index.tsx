@@ -125,7 +125,7 @@ export const getStaticProps = async () => {
     "id"
   );
 
-  if (!normalPosts && !featuredPosts) {
+  if (normalPosts.length === 0 && featuredPosts.length === 0) {
     return {
       notFound: true,
     };

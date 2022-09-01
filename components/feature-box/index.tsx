@@ -57,7 +57,7 @@ const FeatureBox: FC<FeatureBoxProps> = memo(({ posts }) => {
 
   return (
     <AnimatePresence>
-      {posts ? (
+      {posts && posts.length > 0 ? (
         <motion.div className="mb-12">
           <div className="text-lg leading-none relative font-semibold inline-block z-[1] after:content-[''] after:w-full after:h-1 after:absolute after:bottom-0 after:left-0 after:bg-main after:-z-[1] after:rounded-[1] mb-8">
             Featured

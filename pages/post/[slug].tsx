@@ -42,6 +42,7 @@ const Post: NextPage<PostOrPageProps> = memo(({ content }) => {
     });
 
     // 保证页面进入时在顶部
+    console.log("执行了");
     document.body.scroll({ top: 0 });
   }, []);
 
