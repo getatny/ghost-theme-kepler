@@ -3,14 +3,18 @@ import "highlight.js/styles/atom-one-dark.css";
 import { AnimatePresence, motion } from "framer-motion";
 /* eslint-disable @next/next/no-img-element */
 import GhostApi, { getPostContent } from "@/utils/ghost-api";
+import { PauseOne, Performance } from "@icon-park/react";
 import { fadeInOutVariants, slideUpDownVariants } from "@/utils/motion-animate";
-import { memo, useEffect } from "react";
+import { memo, useCallback, useContext, useEffect, useMemo } from "react";
 
+import { MusicStatus } from "hooks/use-music";
 import { NextPage } from "next";
 import PageLoading from "@/components/page-loading";
 import { PostOrPage } from "@tryghost/content-api";
 import Toc from "tocbot";
+import { audioPlayerContext } from "@/utils/context";
 import classNames from "classnames";
+import contentExtractorAndResolver from "@/utils/content-resolver";
 import { formatDate } from "@/utils/commons";
 import hljs from "highlight.js";
 import styles from "../../styles/post-page.module.scss";
@@ -22,6 +26,27 @@ interface PostOrPageProps {
 
 const Post: NextPage<PostOrPageProps> = memo(({ content }) => {
   const router = useRouter();
+
+  const { setResource, play, status, pause } = useContext(audioPlayerContext);
+
+  const { html, extra: extraParams }: { html: string; extra: any } =
+    useMemo(() => {
+      return content.html
+        ? contentExtractorAndResolver(content.html)
+        : {
+            html: "",
+            extra: {},
+          };
+    }, [content]);
+
+  const playBackgroundMusic = useCallback(() => {
+    if (status === MusicStatus.stop) {
+      setResource(extraParams.backgroundMusic.link);
+      play();
+    } else {
+      pause();
+    }
+  }, [extraParams, setResource, play, status, pause]);
 
   useEffect(() => {
     // 初始化盘古之白
@@ -42,7 +67,6 @@ const Post: NextPage<PostOrPageProps> = memo(({ content }) => {
     });
 
     // 保证页面进入时在顶部
-    console.log("执行了");
     document.body.scroll({ top: 0 });
   }, []);
 
@@ -88,8 +112,29 @@ const Post: NextPage<PostOrPageProps> = memo(({ content }) => {
 
           <div
             key={`content-title-${content.slug}`}
-            className="mt-12 text-title font-semibold text-[28px]"
+            className="mt-12 text-title font-semibold text-[28px] relative"
           >
+            {extraParams.backgroundMusic && (
+              <div
+                className="absolute text-base text-second px-3 py-2 rounded-sm bg-black/5 -top-4 -translate-y-full flex font-normal items-center space-x-2 leading-none cursor-pointer"
+                onClick={playBackgroundMusic}
+              >
+                {status === MusicStatus.stop ? (
+                  <Performance
+                    theme="outline"
+                    strokeWidth={4}
+                    className="text-lg"
+                  />
+                ) : (
+                  <PauseOne
+                    theme="outline"
+                    strokeWidth={4}
+                    className="text-lg"
+                  />
+                )}
+                <span>{extraParams.backgroundMusic.name}</span>
+              </div>
+            )}
             {content.title}
           </div>
 
@@ -120,7 +165,7 @@ const Post: NextPage<PostOrPageProps> = memo(({ content }) => {
 
           <motion.div
             className={classNames(styles.contentStyle, "post-content")}
-            dangerouslySetInnerHTML={{ __html: content.html! }}
+            dangerouslySetInnerHTML={{ __html: html }}
             key={`content-${content.slug}`}
             variants={slideUpDownVariants}
             initial="slideOut"
@@ -156,6 +201,7 @@ export const getStaticProps = async (context: any) => {
   try {
     content = await getPostContent(slug);
     console.log("generate post: ", slug);
+    console.log(content);
   } catch (e) {
     console.error("generate post: ", slug, "failed");
 
