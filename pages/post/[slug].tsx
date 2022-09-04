@@ -31,7 +31,7 @@ const Post: NextPage<PostOrPageProps> = memo(({ content }) => {
 
   const { html, extra: extraParams }: { html: string; extra: any } =
     useMemo(() => {
-      return content.html
+      return content?.html
         ? contentExtractorAndResolver(content.html)
         : {
             html: "",
@@ -201,7 +201,6 @@ export const getStaticProps = async (context: any) => {
   try {
     content = await getPostContent(slug);
     console.log("generate post: ", slug);
-    console.log(content);
   } catch (e) {
     console.error("generate post: ", slug, "failed");
 

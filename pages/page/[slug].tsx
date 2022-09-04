@@ -28,7 +28,7 @@ const Page: NextPage<PostOrPageProps> = memo(({ content }) => {
 
   const { html, extra: extraParams }: { html: string; extra: any } =
     useMemo(() => {
-      return content.html
+      return content?.html
         ? contentExtractorAndResolver(content.html)
         : {
             html: "",
