@@ -8,12 +8,21 @@ export enum MusicStatus {
 const useMusic = () => {
   const [status, setStatus] = useState<MusicStatus>(MusicStatus.stop);
   const [instance, setInstance] = useState<any>();
+  const [resouce, setResource] = useState<string>();
 
-  const setResource = useCallback(
+  const _setResource = useCallback(
     (src: string) => {
       instance.src = src;
+      setResource(src);
     },
     [instance]
+  );
+
+  const isCurrent = useCallback(
+    (src: string) => {
+      return resouce === src;
+    },
+    [resouce]
   );
 
   const play = useCallback(() => {
@@ -40,9 +49,10 @@ const useMusic = () => {
 
   return {
     status,
-    setResource,
+    setResource: _setResource,
     play,
     pause,
+    isCurrent,
   };
 };
 

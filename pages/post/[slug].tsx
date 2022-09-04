@@ -4,15 +4,16 @@ import { AnimatePresence, motion } from "framer-motion";
 /* eslint-disable @next/next/no-img-element */
 import GhostApi, { getPostContent } from "@/utils/ghost-api";
 import { PauseOne, Performance } from "@icon-park/react";
+import { audioPlayerContext, blogSettingsContext } from "@/utils/context";
 import { fadeInOutVariants, slideUpDownVariants } from "@/utils/motion-animate";
 import { memo, useCallback, useContext, useEffect, useMemo } from "react";
 
+import Head from "next/head";
 import { MusicStatus } from "hooks/use-music";
 import { NextPage } from "next";
 import PageLoading from "@/components/page-loading";
 import { PostOrPage } from "@tryghost/content-api";
 import Toc from "tocbot";
-import { audioPlayerContext } from "@/utils/context";
 import classNames from "classnames";
 import contentExtractorAndResolver from "@/utils/content-resolver";
 import { formatDate } from "@/utils/commons";
@@ -27,7 +28,9 @@ interface PostOrPageProps {
 const Post: NextPage<PostOrPageProps> = memo(({ content }) => {
   const router = useRouter();
 
-  const { setResource, play, status, pause } = useContext(audioPlayerContext);
+  const { setResource, play, status, pause, isCurrent } =
+    useContext(audioPlayerContext);
+  const blogSettings = useContext(blogSettingsContext);
 
   const { html, extra: extraParams }: { html: string; extra: any } =
     useMemo(() => {
@@ -85,6 +88,12 @@ const Post: NextPage<PostOrPageProps> = memo(({ content }) => {
         <PageLoading />
       ) : (
         <div key={`content-${content.slug}`} className="w-full">
+          <Head>
+            <title key="blog-title">
+              {`${content.title} - ${blogSettings?.title}` || "加载中..."}
+            </title>
+          </Head>
+
           {content.feature_image && (
             <>
               <motion.img
@@ -119,8 +128,12 @@ const Post: NextPage<PostOrPageProps> = memo(({ content }) => {
                 className={classNames(
                   "absolute text-base small:-top-16 small:left-4  px-3 py-2 rounded-sm -top-4 -translate-y-full flex font-normal items-center space-x-2 leading-none cursor-pointer",
                   {
-                    "bg-main text-white": status === MusicStatus.playing,
-                    "bg-gray-100 text-text": status === MusicStatus.stop,
+                    "bg-main text-white":
+                      status === MusicStatus.playing &&
+                      isCurrent(extraParams.backgroundMusic.link),
+                    "bg-gray-100 text-text": !isCurrent(
+                      extraParams.backgroundMusic.link
+                    ),
                   }
                 )}
                 onClick={playBackgroundMusic}
