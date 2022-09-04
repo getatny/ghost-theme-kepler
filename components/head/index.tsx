@@ -66,7 +66,7 @@ const HeadComponent: FC = memo(() => {
               <Performance
                 theme="outline"
                 strokeWidth={4}
-                className="text-xl animate-pulse cursor-pointer"
+                className="text-xl animate-pulse cursor-pointer text-main"
                 onClick={pause}
               />
             )}

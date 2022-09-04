@@ -87,7 +87,13 @@ const Page: NextPage<PostOrPageProps> = memo(({ content }) => {
           >
             {extraParams.backgroundMusic && (
               <div
-                className="absolute text-base text-second px-3 py-2 rounded-sm bg-black/5 -top-4 -translate-y-full flex font-normal items-center space-x-2 leading-none cursor-pointer"
+                className={classNames(
+                  "absolute text-base small:-top-16 small:left-4  px-3 py-2 rounded-sm -top-4 -translate-y-full flex font-normal items-center space-x-2 leading-none cursor-pointer",
+                  {
+                    "bg-main text-white": status === MusicStatus.playing,
+                    "bg-gray-100 text-text": status === MusicStatus.stop,
+                  }
+                )}
                 onClick={playBackgroundMusic}
               >
                 {status === MusicStatus.stop ? (
